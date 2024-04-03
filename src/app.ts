@@ -1,21 +1,13 @@
-import fs from "fs";
+import { yarg } from "./config/plugins/args.plugin";
+import { ServerApp } from "./presentation/server-app";
 
-const start = 1;
-const base = 5;
-const max = 10;
-let content: string = 
-`==================================
-    Multiplication tables (${base})
-==================================\n`;
+(async () => {
+    await main();
 
+})();
 
-for (let i = start; i <= max; i++) {
-    content += `\n${base} x ${i} = ${base * i}`;
-}
+async function main() {
+    const { b: base, l: limit, s: start, v: view, n: name, d: destination } = yarg;
 
-const outputPath = `outputs`;
-fs.mkdirSync(outputPath, { recursive: true });
-fs.writeFileSync(`${outputPath}/multiplication_table_${base}.txt`, content);
-
-console.log(content);
-
+    ServerApp.run({ base, limit, start, view, name, destination });
+};
